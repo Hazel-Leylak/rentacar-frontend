@@ -1,7 +1,8 @@
+
 <div *ngIf="dataLoaded==false" class="spinner-border text-info" role="status">
     <span class="visually-hidden">Loading...</span>
   </div>
-<table *ngIf="dataLoaded==true" class = "table">
+<table *ngIf="dataLoaded==true" class = "table table-striped">
     <thead>
         <tr>
             <th>Model</th>
@@ -13,7 +14,7 @@
     </thead>
     <tr *ngFor = "let car of cars">
         <td>{{car.brandName}}</td>
-        <td>{{car.carName}}</td>
+        <td><a href="cars/cardetail/{{car.carId}}">{{car.carName}}</a></td>
         <td>{{car.modelYear}}</td>
         <td>{{car.colorName}}</td>
         <td>{{car.dailyPrice}}</td>
