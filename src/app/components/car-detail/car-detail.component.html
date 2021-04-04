@@ -1,7 +1,7 @@
 <div class="card">
   <div class="card-header text-center">
     <div class="card-body">
-      <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+      <div *ngIf="carImgs.length" id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
           <div class="carousel-inner  d-flex "
            style="height: 50vh; min-height: 20rem; max-height: 30rem">
   
@@ -20,6 +20,8 @@
             <span class="visually-hidden">Next</span>
           </button>
       </div>
+
+      <img *ngIf="!carImgs.length" src ="{{carImgPath}}/images/defaultCar.jpg" class="card-img-top"  width="100%" height="300">
   <table class = "table table-striped">
     <thead>
         <tr>
