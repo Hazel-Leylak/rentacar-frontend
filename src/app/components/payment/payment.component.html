@@ -28,8 +28,8 @@
   </table>
   <!-- <h6>Customer: {{customers.companyName}} </h6><br> -->
   <th scope="row">Total Price: {{rentalData.totalPrice | currency}} </th>
-  <th scope="row" *ngFor="let customer of customers">Total Price: {{customer.companyName}} </th>
 
+  <form [formGroup]="paymentForm">
   <div class="container py-5">
   
     <div class="row">
@@ -57,12 +57,12 @@
               <form role="form">
                 <div class="form-group">
                   <label for="username">Full name (on the card)</label>
-                  <input type="text" name="username" placeholder="Jason Doe" required class="form-control">
+                  <input type="text" formControlname="fullName" placeholder="Name Last Name" required class="form-control">
                 </div>
                 <div class="form-group">
                   <label for="cardNumber">Card number</label>
                   <div class="input-group">
-                    <input type="text" name="cardNumber" placeholder="Your card number" class="form-control" required>
+                    <input type="text" name="cardNumber" formControlname="cardNumber" placeholder="Your card number" class="form-control" required>
                     <div class="input-group-append">
                       <span class="input-group-text text-muted">
                                                   <i class="fa fa-cc-visa mx-1"></i>
@@ -77,8 +77,8 @@
                     <div class="form-group">
                       <label><span class="hidden-xs">Expiration</span></label>
                       <div class="input-group">
-                        <input type="number" placeholder="MM" name="" class="form-control" required>
-                        <input type="number" placeholder="YY" name="" class="form-control" required>
+                        <input type="number" placeholder="MM" name="" formControlname="expMonth" class="form-control" required>
+                        <input type="number" placeholder="YY" name="" formControlname="expYear" class="form-control" required>
                       </div>
                     </div>
                   </div>
@@ -87,14 +87,17 @@
                       <label title="Three-digits code on the back of your card">CVV
                                                   <i class="fa fa-question-circle"></i>
                                               </label>
-                      <input type="text" required class="form-control">
+                      <input type="text" formControlname="cvv" required class="form-control">
                     </div>
                   </div>
   
-  
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" [(ngModel)]="saveCard">
+                    <label class="form-check-label" for="flexSwitchCheckDefault">Save my card info.</label>
+                  </div>
   
                 </div>
-                <button type="button" class="subscribe btn btn-primary btn-block rounded-pill shadow-sm"> Confirm  </button>
+                <button type="button" (click) = "paymentProcess()" class="subscribe btn btn-primary btn-block rounded-pill shadow-sm"> Confirm  </button>
               </form>
             </div>
             <!-- End -->
@@ -109,3 +112,4 @@
       </div>
     </div>
   </div>
+  </form>

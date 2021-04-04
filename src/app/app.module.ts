@@ -20,7 +20,9 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { RentalAddComponent } from './components/rental-add/rental-add.component';
 
 import {ToastrModule} from "ngx-toastr";
-import { PaymentComponent } from './components/payment/payment.component'
+import { PaymentComponent } from './components/payment/payment.component';
+import { BrandFilterPipePipe } from './pipes/brand-filter-pipe.pipe';
+import { ColorFilterPipePipe } from './pipes/color-filter-pipe.pipe'
 
 
 @NgModule({
@@ -38,7 +40,9 @@ import { PaymentComponent } from './components/payment/payment.component'
     FilterPipePipe,
     SidebarComponent,
     RentalAddComponent,
-    PaymentComponent
+    PaymentComponent,
+    BrandFilterPipePipe,
+    ColorFilterPipePipe
   ],
   imports: [
     BrowserModule,

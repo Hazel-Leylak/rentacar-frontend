@@ -8,6 +8,7 @@ import { Customer } from 'src/app/models/customer';
 import { CustomerService } from 'src/app/services/customer.service';
 import { DatePipe } from '@angular/common';
 import { Rental } from 'src/app/models/rental';
+import { RentalService } from 'src/app/services/rental.service';
 
 @Component({
   selector: 'app-rental-add',
@@ -37,7 +38,8 @@ export class RentalAddComponent implements OnInit {
     private router: Router,
     private toastrService: ToastrService,
     private datePipe:DatePipe,
-    private activatedRoute:ActivatedRoute) { }
+    private activatedRoute:ActivatedRoute,
+    private rentalService:RentalService) { }
 
   ngOnInit(): void {
     this.getCustomers();
@@ -96,10 +98,25 @@ export class RentalAddComponent implements OnInit {
 
   payment(){
     if (this.rentalAddForm.valid) {
-      sessionStorage.setItem('rental-data',JSON.stringify(this.rentalAddForm.value));
+      //sessionStorage.setItem('rental-data',JSON.stringify(this.rentalAddForm.value));
       this.closeModal.nativeElement.click();
-      this.toastrService.warning("Routing the payment page.");
-      this.router.navigate(['/payment']);
+      //this.toastrService.warning("Routing the payment page.");
+      //this.router.navigate(['/payment']);
+      let rental:Rental = {
+        carId: this.car[0].carId,
+        customerId: this.customers[0].id,
+        rentDate: this.rentDate,
+        endDate: this.endDate,
+        returnDate: undefined
+      };
+  
+      this.rentalService.getRentalStatus(rental.carId).subscribe(()=>{
+        this.rentalService.rentalData = rental;
+        this.toastrService.warning("Routing the payment page.");
+        this.router.navigate(['/payment']);
+      },responseError=>{
+        this.toastrService.warning("Problem has occured.");
+      })
       }
       else {
         this.toastrService.error("Form is incorrect.");
