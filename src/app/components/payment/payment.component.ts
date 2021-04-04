@@ -24,7 +24,7 @@ export class PaymentComponent implements OnInit {
   saveCard:boolean = false;
   paymentForm:FormGroup;
   rentalObj:Rental;
-  
+  rental: Rental | undefined;
 
 
   constructor(private carDetailService:CarDetailService,
@@ -37,9 +37,11 @@ export class PaymentComponent implements OnInit {
 
   ngOnInit(): void {
     this.rentalData = JSON.parse(sessionStorage.getItem('rental-data'));
-    this.getCarDetails(this.rentalData.carId);
-    this.getCustomerDetails(this.rentalData.customerId);
+    this.rental = this.rentalService.rentalData;
+    this.getCarDetails(this.rental.carId);
+    this.getCustomerDetails(this.rental.customerId);
     this.createPaymentAddForm();
+    
   }
 
   getCarDetails(carId:number){
@@ -57,7 +59,7 @@ export class PaymentComponent implements OnInit {
 
   createPaymentAddForm() {
     this.paymentForm = this.formBuilder.group({
-     customerId: [this.rentalData.customerId, Validators.required],
+     customerId: [this.rental.customerId, Validators.required],
      fullName:[new FormControl(''), Validators.required],
      cardNumber:[new FormControl(''),Validators.required],
      expMonth:[new FormControl(''), Validators.required],
@@ -84,14 +86,15 @@ export class PaymentComponent implements OnInit {
     // this.rentalObj.returnDate = new Date();
     //data.returnDate = new Date();
 
-    let rental: Rental | undefined = this.rentalService.rentalData;
+    
 
-    if(!rental){
+    if(!this.rental){
       this.toastrService.error("Problem has occured. Please try again.");
       return;
     }
-    this.rentalService.addRental(rental).subscribe(response=>{
+    this.rentalService.addRental(this.rental).subscribe(response=>{
       this.toastrService.success("Car rented successfully");
+      sessionStorage.removeItem('rental-data');
     });
     
   }

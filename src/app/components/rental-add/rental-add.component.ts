@@ -112,6 +112,7 @@ export class RentalAddComponent implements OnInit {
   
       this.rentalService.getRentalStatus(rental.carId).subscribe(()=>{
         this.rentalService.rentalData = rental;
+        sessionStorage.setItem('rental-data',JSON.stringify(this.rentalAddForm.value));
         this.toastrService.warning("Routing the payment page.");
         this.router.navigate(['/payment']);
       },responseError=>{
