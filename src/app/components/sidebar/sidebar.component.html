@@ -1,0 +1,54 @@
+<div class="row my-3 pt-3">
+    <div class="col-md-12">
+        <h6>Brand:</h6>
+        <select 
+                [(ngModel)]="currentBrand"  class="form-select px-2"  >
+            <option 
+                [ngValue]="undefined" disabled  selected> 
+                select...
+            </option>
+            <option 
+                *ngFor="let brand of brands" 
+                [ngValue]="brand" >
+                {{brand.brandName}}
+            </option>
+        </select>
+    </div>
+</div>
+
+<div class="row my-3">  
+    <div class="col-md-12">
+        <h6>Color:</h6>
+        <select 
+                [(ngModel)]="currentColor"  
+                class="form-select px-2" >
+            <option 
+                [ngValue]="undefined" disabled  selected> 
+                select...
+            </option>
+            <option 
+                *ngFor="let color of colors" 
+                [ngValue]="color" >
+                {{color.colorName}}
+            </option>
+      </select>
+    </div>       
+</div>
+
+
+<div class="row my-3 pb-3">
+    <div class="col-md-6">
+        <button 
+        class="btn btn-secondary"
+        (click) = "filter()"
+        >
+            Filter
+        </button>
+    </div>
+    <div class="col-md-6">
+        <button class="btn btn-warning"
+        routerLink="/cars">
+            Clear
+        </button>
+    </div>
+</div>

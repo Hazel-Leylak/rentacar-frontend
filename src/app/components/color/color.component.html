@@ -1,8 +1,22 @@
-<ul class="list-group">
+<!-- <ul class="list-group">
     <li [class]="getAllColorClass()" routerLink= "/cars">All Colors</li>
       <li (click)="setCurrentColor(color)" 
       routerLink = "/cars/color/{{color.colorId}}"
       *ngFor="let color of colors" 
       [class]="getCurrentColorClass(color)">{{color.colorName}}</li>
     </ul>
-    <h5 *ngIf="currentColor">{{currentColor.colorName}} choosed</h5>
+    <h5 *ngIf="currentColor">{{currentColor.colorName}} choosed</h5> -->
+
+    <h6>Select Color:</h6>
+    <select [(ngModel)]="currentColor" name = "selectedColor"  class="form-select" aria-label="Default select example">
+      
+      <option [selected]="getAllColorClass()" value = "0">All Colors</option>
+      <option 
+      *ngFor="let color of colors" 
+      [class]="getCurrentColorClass(color)"  [ngValue]="color">{{color.colorName}}</option>
+    </select>
+
+    <button></button>
+
+
+    

@@ -2,6 +2,16 @@
 <div *ngIf="dataLoaded==false" class="spinner-border text-info" role="status">
     <span class="visually-hidden">Loading...</span>
   </div>
+
+  <div class="mb-3">
+    <label for="filterText" class="form-label">Search Car</label>
+    <input type="text" [(ngModel)]="filterText" class="form-control" id="filterText" placeholder="enter a search value...">
+  </div>
+
+  <div *ngIf="filterText" class ="alert alert-success">
+    {{filterText}} searched.
+  </div>
+
 <table *ngIf="dataLoaded==true" class = "table table-striped">
     <thead>
         <tr>
@@ -10,13 +20,15 @@
             <th>Model Year</th>
             <th>Color</th>
             <th>Daily Price</th>
+            <th>VAT Price</th>
         </tr>
     </thead>
-    <tr *ngFor = "let car of cars">
-        <td>{{car.brandName}}</td>
-        <td><a href="cars/cardetail/{{car.carId}}">{{car.carName}}</a></td>
+    <tr *ngFor = "let car of cars |filterPipe:filterText">
+        <td>{{car.brandName | uppercase}}</td>
+        <td><a href="cars/cardetail/{{car.carId}}">{{car.carName | uppercase}}</a></td>
         <td>{{car.modelYear}}</td>
         <td>{{car.colorName}}</td>
-        <td>{{car.dailyPrice}}</td>
+        <td>{{car.dailyPrice | currency}}</td>
+        <td>{{car.dailyPrice | vatAdded:10 | currency}} </td>
     </tr>
 </table>

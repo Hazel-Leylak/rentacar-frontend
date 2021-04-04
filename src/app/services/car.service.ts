@@ -28,6 +28,12 @@ export class CarService {
     return this.httpClient.get<ListResponseModel<CarDetail>>(path);
   }
 
+  getCarsByBrandAndColor(brandId:number, colorId:number):Observable<ListResponseModel<CarDetail>>{
+    let path = this.apiUrl + "getbybrandcolor?brandId=" + brandId +"&colorId=" + colorId;
+    console.log(path)
+    return this.httpClient.get<ListResponseModel<CarDetail>>(path);
+  }
+
 
 
   

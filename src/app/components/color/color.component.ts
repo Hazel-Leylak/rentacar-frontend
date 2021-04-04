@@ -11,6 +11,7 @@ export class ColorComponent implements OnInit {
 
   colors:Color[] = [];
   currentColor:Color;
+  Filters = {brandId: '', colorId: ''};
   constructor(private colorService:ColorService) { }
 
   ngOnInit(): void {
@@ -25,15 +26,18 @@ export class ColorComponent implements OnInit {
   
   getAllColorClass(){
     if(!this.currentColor){
+      console.log("get all color active")
       return "list-group-item active"
     }
     else{
+      console.log("get all color diasctive")
       return "list-group-item"
     }
   }
 
   getCurrentColorClass(color:Color){
     if( color == this.currentColor){
+      console.log(" get curretn color class: " + this.currentColor.colorName)
       return "list-group-item active"
     }
     else{
@@ -42,6 +46,10 @@ export class ColorComponent implements OnInit {
   }
 
   setCurrentColor(color:Color){
+    console.log("set current color: " + color.colorName + color.colorId)
     this.currentColor = color;
   }
+
+  
+
 }

@@ -1,0 +1,108 @@
+
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { CarDetail } from 'src/app/models/carDetail';
+import { Customer } from 'src/app/models/customer';
+import { CustomerService } from 'src/app/services/customer.service';
+import { DatePipe } from '@angular/common';
+import { Rental } from 'src/app/models/rental';
+
+@Component({
+  selector: 'app-rental-add',
+  templateUrl: './rental-add.component.html',
+  styleUrls: ['./rental-add.component.css'],
+  providers:[DatePipe]
+})
+export class RentalAddComponent implements OnInit {
+
+  @ViewChild('closeModal') closeModal: ElementRef
+  @Input() car:CarDetail[];
+  customers: Customer[];
+  customerId:number;    
+  rentalAddForm: FormGroup;
+  closeAddExpenseModal: any;
+  minDate:string | null; 
+  rentDate:Date | null;
+  endDate:Date | null;
+  date:Date;
+  totalPrice:number=0;
+  totalDay:number=1;
+  formCompleted = false;
+
+
+  constructor(private customerService: CustomerService,
+    private formBuilder: FormBuilder,             
+    private router: Router,
+    private toastrService: ToastrService,
+    private datePipe:DatePipe,
+    private activatedRoute:ActivatedRoute) { }
+
+  ngOnInit(): void {
+    this.getCustomers();
+    this.createRentalAddForm();
+    
+    
+  }
+
+  createRentalAddForm() {
+     this.rentalAddForm = this.formBuilder.group({
+    //   carId:this.activatedRoute.params.subscribe(params=>{
+    //     params["carId"]
+    //   }),
+      carId: [this.car[0].carId, Validators.required],
+      rentDate: [this.minDate, Validators.required],
+      endDate: [this.minDate, Validators.required],
+      customerId: ['', Validators.required],
+      dailyPrice: [this.car[0].dailyPrice, Validators.required],
+      totalPrice: [this.car[0].dailyPrice, Validators.required],
+      totalDay: [1, Validators.required],
+    });
+  }
+
+
+
+  rentalDateChangeEvent(event: any) {
+    this.minDate = event.target.value;    
+    this.rentDate=event.target.value;
+  }
+  endDateChangeEvent(event: any) {
+    this.endDate = event.target.value;
+    this.totalDay = this.calculatePrice();
+  }
+
+  getCustomers(){
+    this.customerService.getCustomers().subscribe((response)=>{
+      this.customers = response.data;
+    })
+  }
+
+  calculatePrice(){
+    if(this.rentDate != null && this.endDate != null){
+      var date1:any = new Date(this.rentDate);
+      var date2:any = new Date(this.endDate);
+      var diffDays:any = Math.floor((date2.getTime() - date1.getTime()) / (1000 * 60 * 60 * 24));
+      this.totalPrice = diffDays * this.car[0].dailyPrice;
+      return diffDays;
+    }
+    else{
+      this.toastrService.error("Dates were not chosen correctly.");
+      return 0;
+    }
+  }
+
+ 
+
+  payment(){
+    if (this.rentalAddForm.valid) {
+      sessionStorage.setItem('rental-data',JSON.stringify(this.rentalAddForm.value));
+      this.closeModal.nativeElement.click();
+      this.toastrService.warning("Routing the payment page.");
+      this.router.navigate(['/payment']);
+      }
+      else {
+        this.toastrService.error("Form is incorrect.");
+      }   
+  }
+}

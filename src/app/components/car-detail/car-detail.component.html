@@ -20,11 +20,7 @@
             <span class="visually-hidden">Next</span>
           </button>
       </div>
-  
-    </div>  
-  </div>
-
-<table class = "table table-striped">
+  <table class = "table table-striped">
     <thead>
         <tr>
             <th>Model</th>
@@ -32,6 +28,7 @@
             <th>Model Year</th>
             <th>Color</th>
             <th>Daily Price</th>
+            <th>VAT Price</th>
         </tr>
     </thead>
     <tr *ngFor = "let car of cars">
@@ -39,6 +36,20 @@
         <td>{{car.carName}}</td>
         <td>{{car.modelYear}}</td>
         <td>{{car.colorName}}</td>
-        <td>{{car.dailyPrice}}</td>
+        <td>{{car.dailyPrice |currency}}</td>
+        <td>{{car.dailyPrice | vatAdded:10 | currency}}</td>
     </tr>
 </table>
+
+<div class="d-grid gap-2 col-6 mx-auto">
+  <button *ngIf="rentalStatus == true" class="btn btn-success" type="button" data-bs-toggle="modal" data-bs-target="#rentalModal">Rent</button>
+  <button *ngIf="rentalStatus == false" class="btn btn-success" disabled type="button">{{rentalStatusMsg}}</button>
+</div>
+
+    </div>
+  </div>  
+</div>
+
+<app-rental-add *ngIf="rentalStatus == true" [car] = "cars"></app-rental-add>
+
+

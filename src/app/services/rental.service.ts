@@ -16,4 +16,9 @@ export class RentalService {
     let urlPath = this.apiUrl + "getdetails";
     return this.httpClient.get<ListResponseModel<RentalDetail>>(urlPath);
   }
+
+  getRentalStatus(carId:number):Observable<ListResponseModel<RentalDetail>>{
+    let urlPath = this.apiUrl + "checkstatus?carId=" +carId;
+    return this.httpClient.get<ListResponseModel<RentalDetail>>(urlPath);
+  }
 }
