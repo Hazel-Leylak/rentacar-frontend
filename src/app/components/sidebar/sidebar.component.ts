@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Brand } from 'src/app/models/brand';
 import { Color } from 'src/app/models/color';
 import { BrandService } from 'src/app/services/brand.service';
@@ -16,7 +17,7 @@ export class SidebarComponent implements OnInit {
   currentColor!:Color;
   brands: Brand[];
   currentBrand!:Brand;
-  constructor(private brandService:BrandService, private colorService:ColorService, private router:Router) { }
+  constructor(private brandService:BrandService, private colorService:ColorService, private router:Router, private toastrService:ToastrService) { }
 
   ngOnInit(): void {
     this.getBrands();
@@ -65,9 +66,9 @@ export class SidebarComponent implements OnInit {
 
       this.router.navigateByUrl(routePath);
     }
-    // else{
-    //   this.toastrService.warning('Lütfen Renk ve Marka seçimi yapınız.');
-    // }
+     else{
+       this.toastrService.warning('Please select filter parameter.');
+     }
   }
   }
 

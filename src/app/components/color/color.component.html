@@ -6,8 +6,8 @@
       [class]="getCurrentColorClass(color)">{{color.colorName}}</li>
     </ul>
     <h5 *ngIf="currentColor">{{currentColor.colorName}} choosed</h5> -->
-
-    <h6>Select Color:</h6>
+<!-- 
+    <h6>Select Colorx:</h6>
     <select [(ngModel)]="currentColor" name = "selectedColor"  class="form-select" aria-label="Default select example">
       
       <option [selected]="getAllColorClass()" value = "0">All Colors</option>
@@ -16,7 +16,132 @@
       [class]="getCurrentColorClass(color)"  [ngValue]="color">{{color.colorName}}</option>
     </select>
 
-    <button></button>
+    <button></button> -->
+    
+<!-- Color List -->
 
+    <div class="card">
+      <div class="card-header text-center">
+        <div class="card-body">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Car</th>
+                <th>Operations</th>
+    
+              </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let color of colors">
+              <th scope="row">{{color.colorId}}</th>
+              <td>{{color.colorName}}</td>
+              <td><ul class="list-inline m-0">
+                
+                <button class="btn btn-primary" (click)="setSelectedColorUpdate(color)" data-bs-toggle="modal" 
+                data-bs-target="#updateColorModal" style="margin-right: 16px" aria-label="Edit">
+                  <i class="fa fa-pencil fa-fw" aria-hidden="true"></i>
+                </button>
+                
+                <button class="btn btn-danger"  (click)="setSelectedColorDelete(color)" data-bs-toggle="modal" 
+                data-bs-target="#deleteColorModal" style="margin-right: 16px" aria-label="Delete">
+                  <i class="fa fa-trash-o" aria-hidden="true"></i>
+                </button>
+            </ul></td>
+            </tr>
+          </tbody>
+          </table>
+        </div>
+        <div class="card-footer">
+          <button  class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addColorModal"><i class="fa fa-plus" aria-hidden="true"></i> Add New Color</button>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Color Add Form -->
+
+  <div class="modal fade" id="addColorModal" tabindex="-1" aria-labelledby="addColorModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="AddColorTitle">Add Color</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="colorAddForm" >
+            <div class="row">
+              <div class="col-8">
+                <label for="colorName">Color:</label>
+                <input type="text" class="form-control" id="colorName" formControlName="colorName">
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Dismiss</button>
+          <button class="btn btn-success" (click)="add()" data-bs-dismiss="modal" >Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Color Update Form -->
+
+  
+  <div class="modal fade" id="updateColorModal" tabindex="-1" aria-labelledby="updateColorModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="UpdateColorTitle">Edit Color</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="colorUpdateForm">
+            <div class="row">
+              <div class="col-8">
+                <label for="colorName">Color:</label>
+                <input type="text" class="form-control" *ngIf="selectedColor" id="colorNameUpdate" formControlName="colorName" value="{{selectedColor.colorName}}">
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Dismiss</button>
+          <button class="btn btn-success" (click)="update()" data-bs-dismiss="modal" >Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Color Delete Form -->
+  <div class="modal fade" id="deleteColorModal" tabindex="-1" aria-labelledby="deleteColorModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="DeleteColorTitle">Delete Color</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="colorDeleteForm" >
+            <div class="row">
+              <div class="col-8">
+                <label for="colorName">Color ID:</label>
+                <input type="text" class="form-control" *ngIf="selectedColor" id="colorIdDelete" formControlName="colorId" value="{{selectedColor.colorId}}" readonly>
+              </div>
+              <div class="col-8">
+                <label for="colorName">Color ID:</label>
+                <input type="text" class="form-control" *ngIf="selectedColor" id="colorNameDelete" formControlName="colorName" value="{{selectedColor.colorName}}" readonly>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Dismiss</button>
+          <button class="btn btn-danger" (click)="delete()" data-bs-dismiss="modal" >Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
     

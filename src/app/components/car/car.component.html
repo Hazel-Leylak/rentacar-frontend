@@ -20,15 +20,186 @@
             <th>Model Year</th>
             <th>Color</th>
             <th>Daily Price</th>
-            <th>VAT Price</th>
+            <th>Operations</th>
         </tr>
     </thead>
+    <tbody>
     <tr *ngFor = "let car of cars |filterPipe:filterText">
         <td>{{car.brandName | uppercase}}</td>
         <td><a href="cars/cardetail/{{car.carId}}">{{car.carName | uppercase}}</a></td>
         <td>{{car.modelYear}}</td>
         <td>{{car.colorName}}</td>
         <td>{{car.dailyPrice | currency}}</td>
-        <td>{{car.dailyPrice | vatAdded:10 | currency}} </td>
+        <td><ul class="list-inline m-0">
+                
+          <button class="btn btn-primary" (click)="setSelectedCarUpdate(car)" data-bs-toggle="modal" 
+          data-bs-target="#updateCarModal" style="margin-right: 16px" aria-label="Edit">
+            <i class="fa fa-pencil fa-fw" aria-hidden="true"></i>
+          </button>
+          
+          <button class="btn btn-danger"  (click)="setSelectedCarDelete(car)" data-bs-toggle="modal" 
+          data-bs-target="#deleteCarModal" style="margin-right: 16px" aria-label="Delete">
+            <i class="fa fa-trash-o" aria-hidden="true"></i>
+          </button>
+      </ul></td>
     </tr>
+  </tbody>
 </table>
+<div class="card-footer">
+  <button  class="btn btn-success" (click)="addCar()"><i class="fa fa-plus" aria-hidden="true"></i> Add New Car</button>
+</div>
+
+
+<!-- Car Update Form -->
+
+
+<div class="modal fade" id="updateCarModal" tabindex="-1" aria-labelledby="updateCarModal" aria-hidden="true" >
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="UpdateCarTitle">Edit Car</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="carUpdateForm" *ngIf="selectedCar">
+          <div class="row">
+            <div class="col-8">
+              <label for="carIdUpdate">Car ID:</label>
+              <input type="number" class="form-control"  id="carIdUpdate" formControlName="carId"
+                value="{{selectedCar.carId}}" readonly>
+            </div>
+            <div class="col-8">
+              <label for="carNameUpdate">Car Name:</label>
+              <input type="text" class="form-control"  id="carNameUpdate" formControlName="carName"
+                value="{{selectedCar.carName}}">
+            </div>
+            <div class="col-8">
+              <label for="brandId">Brand</label>
+
+              <select formControlName="brandId"  class="form-select px-2" *ngIf="selectedCar" >
+                <option [ngValue]="undefined" disabled selected>
+                  select...
+                </option>
+                <option *ngFor="let brand of brands" [ngValue]="brand.brandId">
+                  {{brand.brandName}}
+                </option>
+              </select>
+
+            </div>
+
+            <div class="col-8">
+              <label for="colorId">Color</label>
+
+              <select formControlName="colorId" class="form-select px-2" *ngIf="selectedCar" >
+                <option *ngFor="let color of colors" [ngValue]="color.colorId">
+                  {{color.colorName}}
+                </option>
+
+              </select>
+
+            </div>
+
+            <div class="col-8">
+              <label for="modelYearUpdate">Model Year:</label>
+              <input type="text" class="form-control" id="modelYearUpdate" formControlName="modelYear"
+                value="{{selectedCar.modelYear}}">
+            </div>
+            <div class="col-8">
+              <label for="dailyPriceUpdate">Daily Price:</label>
+              <input type="number" class="form-control" id="dailyPriceUpdate"
+                formControlName="dailyPrice" value="{{selectedCar.dailyPrice}}">
+            </div>
+            <div class="col-8">
+              <label for="descriptionUpdate">Description:</label>
+              <input type="text" class="form-control" id="descriptionUpdate"
+                formControlName="description" value="{{selectedCar.description}}">
+            </div>
+
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Dismiss</button>
+        <button class="btn btn-success" (click)="update()" data-bs-dismiss="modal">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- #Car Delete Form# -->
+
+
+<div class="modal fade" id="deleteCarModal" tabindex="-1" aria-labelledby="deleteCarModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="DeleteCarTitle">Delete Car</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="carDeleteForm" *ngIf="selectedCar">
+          <div class="row">
+            <div class="col-8">
+              <label for="carId">Car ID:</label>
+              <input type="number" class="form-control"  id="carIdDelete" formControlName="carId"
+                value="{{selectedCar.carId}}" readonly>
+            </div>
+            <div class="col-8">
+              <label for="carName">Car Name:</label>
+              <input type="text" class="form-control" id="carNameDelete" formControlName="carName"
+                value="{{selectedCar.carName}}" readonly>
+            </div>
+            <div class="col-8">
+              <label for="brandId">Brand</label>
+
+              <select formControlName="brandId"  class="form-select px-2" *ngIf="selectedCar" >
+                <option [ngValue]="undefined" disabled selected>
+                  select...
+                </option>
+                <option *ngFor="let brand of brands" [ngValue]="brand.brandId" readonly>
+                  {{brand.brandName}}
+                </option>
+              </select>
+
+            </div>
+
+            <div class="col-8">
+              <label for="colorId">Color</label>
+
+              <select formControlName="colorId" class="form-select px-2" *ngIf="selectedCar" >
+                <option *ngFor="let color of colors" [ngValue]="color.colorId" disabled>
+                  {{color.colorName}}
+                </option>
+
+              </select>
+
+            </div>
+
+            <div class="col-8">
+              <label for="modelYear">Model Year:</label>
+              <input type="text" class="form-control" id="modelYearDelete" formControlName="modelYear"
+                value="{{selectedCar.modelYear}}" readonly>
+            </div>
+            <div class="col-8">
+              <label for="dailyPrice">Daily Price:</label>
+              <input type="number" class="form-control" id="dailyPriceDelete"
+                formControlName="dailyPrice" value="{{selectedCar.dailyPrice}}" readonly>
+            </div>
+            <div class="col-8">
+              <label for="description">Description:</label>
+              <input type="text" class="form-control" id="descriptionDelete"
+                formControlName="description" value="{{selectedCar.description}}" readonly>
+            </div>
+
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Dismiss</button>
+        <button class="btn btn-success" (click)="delete()" data-bs-dismiss="modal">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+

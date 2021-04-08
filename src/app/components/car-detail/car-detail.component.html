@@ -33,6 +33,7 @@
             <th>VAT Price</th>
         </tr>
     </thead>
+    <tbody>
     <tr *ngFor = "let car of cars">
         <td>{{car.brandName}}</td>
         <td>{{car.carName}}</td>
@@ -41,6 +42,7 @@
         <td>{{car.dailyPrice |currency}}</td>
         <td>{{car.dailyPrice | vatAdded:10 | currency}}</td>
     </tr>
+  </tbody>
 </table>
 
 <div class="d-grid gap-2 col-6 mx-auto">
