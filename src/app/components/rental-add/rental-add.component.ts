@@ -109,12 +109,12 @@ export class RentalAddComponent implements OnInit {
     this.findeksService.getFindeksByCustomer(customerId).subscribe(response=>{
       this.customerFindeks = response.data;
     })
-    if(this.selectedCar.minFindeksScore <= this.customerFindeks.score){
-      return true;
-    }
-    else{
-      return false;
-    }
+    // if(this.selectedCar.minFindeksScore <= this.customerFindeks.score){
+    //   return true;
+    // }
+    // else{
+    //   return false;
+    // }
   }
 
  
@@ -133,7 +133,7 @@ export class RentalAddComponent implements OnInit {
         returnDate: undefined
       };
 
-      if(this.isFindeksScoreEnough(rental.carId, rental.customerId)){
+      //if(this.isFindeksScoreEnough(rental.carId, rental.customerId)){
   
       this.rentalService.getRentalStatus(rental.carId).subscribe(()=>{
         
@@ -147,10 +147,10 @@ export class RentalAddComponent implements OnInit {
       }
       else{
         this.toastrService.error("Findeks Score is not enough");
-      }
+      
     }
-      else {
-        this.toastrService.error("Form is incorrect.");
-      }   
+      // else {
+      //   this.toastrService.error("Form is incorrect.");
+      // }   
   }
 }
