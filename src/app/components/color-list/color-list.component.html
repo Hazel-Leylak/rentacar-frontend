@@ -1,0 +1,21 @@
+<div class="card">
+    <div class="card-header text-center">
+      <div class="card-body">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Car</th>
+  
+            </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let color of colors">
+            <th scope="row">{{color.colorId}}</th>
+            <td>{{color.colorName}}</td>
+            
+          </tr>
+        </tbody>
+        </table>
+
+  </div>

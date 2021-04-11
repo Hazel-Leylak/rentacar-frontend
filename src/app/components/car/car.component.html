@@ -20,6 +20,7 @@
             <th>Model Year</th>
             <th>Color</th>
             <th>Daily Price</th>
+            <th>Min. Findeks Score</th>
             <th>Operations</th>
         </tr>
     </thead>
@@ -30,6 +31,7 @@
         <td>{{car.modelYear}}</td>
         <td>{{car.colorName}}</td>
         <td>{{car.dailyPrice | currency}}</td>
+        <td>{{car.minFindeksScore}}</td>
         <td><ul class="list-inline m-0">
                 
           <button class="btn btn-primary" (click)="setSelectedCarUpdate(car)" data-bs-toggle="modal" 

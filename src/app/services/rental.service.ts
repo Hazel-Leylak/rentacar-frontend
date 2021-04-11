@@ -30,4 +30,8 @@ export class RentalService {
     let urlPath = this.apiUrl + "add";
     return this.httpClient.post<ResponseModel>(urlPath,rental);
   }
+
+  checkStatus(carId:number):Observable<ResponseModel>{
+    return this.httpClient.get<ResponseModel>(this.apiUrl + "checkstatus?carId="+carId)
+  }
 }

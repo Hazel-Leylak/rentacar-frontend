@@ -19,7 +19,7 @@ export class PaymentComponent implements OnInit {
 
   rentalData:any;
   cars:CarDetail[];
-  customers:Customer[];
+  customer:Customer;
   companyName:string;
   saveCard:boolean = false;
   paymentForm:FormGroup;
@@ -52,8 +52,8 @@ export class PaymentComponent implements OnInit {
 
   getCustomerDetails(customerId:number){
     this.customerService.getCustomerById(customerId).subscribe(response=>{
-      this.customers = response.data;
-      console.log(this.customers)
+      this.customer = response.data;
+      console.log(this.customer)
     })
   }
 

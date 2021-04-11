@@ -30,7 +30,7 @@
             <th>Model Year</th>
             <th>Color</th>
             <th>Daily Price</th>
-            <th>VAT Price</th>
+            <th>Min. Findeks Score</th>
         </tr>
     </thead>
     <tbody>
@@ -40,7 +40,7 @@
         <td>{{car.modelYear}}</td>
         <td>{{car.colorName}}</td>
         <td>{{car.dailyPrice |currency}}</td>
-        <td>{{car.dailyPrice | vatAdded:10 | currency}}</td>
+        <td>{{car.minFindeksScore}}</td>
     </tr>
   </tbody>
 </table>

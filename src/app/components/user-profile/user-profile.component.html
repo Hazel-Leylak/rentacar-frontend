@@ -1,0 +1,128 @@
+<body class="bg-light">
+    
+    <div class="container">
+      <main>
+    
+        <div class="row g-5">
+          
+          <div class="col-md-7 col-lg-12">
+            <h2 class="mb-3">User Info</h2>
+            <form class="needs-validation" novalidate [formGroup]="userInfoForm">
+              <div class="row g-3">
+                <div class="col-sm-6">
+                  <label for="firstName" class="form-label">First name</label>
+                  <input formControlName="firstName" type="text" class="form-control" id="firstName" placeholder="" value="" required>
+                  <div class="invalid-feedback">
+                    Valid first name is required.
+                  </div>
+                </div>
+    
+                <div class="col-sm-6">
+                  <label for="lastName" class="form-label">Last name</label>
+                  <input formControlName="lastName" type="text" class="form-control" id="lastName" placeholder="" value="" required>
+                  <div class="invalid-feedback">
+                    Valid last name is required.
+                  </div>
+                </div>
+    
+                <div class="col-12">
+                  <label for="email" class="form-label">Email</label>
+                  <input formControlName="email" type="email" class="form-control" id="email" placeholder="you@example.com">
+                  <div class="invalid-feedback">
+                    Please enter a valid email address.
+                  </div>
+                </div>
+
+
+<!-- <h2 class="fw-light">Security</h2>
+<div class="col-12">
+    <div class="col">
+        <div class="mb-3">
+
+            <label for="colorName">New Password:</label>
+            <input type="text" class="form-control" id="passwordUpdate" formControlName="currentPassword">
+
+
+        </div>
+    </div>
+
+</div> -->
+<hr class="my-4">
+<!-- Color Update Form -->
+
+<h2 class="fw-light">Security</h2>
+
+<button class="btn btn-primary"  data-bs-toggle="modal" 
+                data-bs-target="#changePasswordModal" style="margin-right: 16px" aria-label="Edit">
+                  Change Password
+                </button>
+
+<div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="ChangePasswordTitle">Change Password</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="changePasswordForm">
+            <div class="row">
+              <div class="col-8">
+                <label for="passwordUpdate">New Password:</label>
+                <input type="password" class="form-control" id="passwordUpdate" formControlName="password" >
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Dismiss</button>
+          <button class="btn btn-success" (click)="changePassword()" data-bs-dismiss="modal" >Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- 
+<h2 class="fw-light">Security</h2>
+    <div class="row">
+      <div class="col">
+        <div class="mb-3">
+          <app-password-input
+            formControlName="password"
+            
+          >
+          <label for="password">New Password:</label>
+          <input type="password" class="form-control" id="password" formControlName="password">
+        </app-password-input>
+        </div>
+      </div>
+
+    </div> -->
+
+              </div>
+
+    
+              <hr class="my-4">
+  
+    
+              <button class="w-100 btn btn-primary btn-lg" (click) = "updateUser()" type="submit">Save Changes</button>
+            </form>
+          </div>
+        </div>
+      </main>
+    
+      <footer class="my-5 pt-5 text-muted text-center text-small">
+        <p class="mb-1">&copy; 2017–2021 Company Name</p>
+        <ul class="list-inline">
+          <li class="list-inline-item"><a href="#">Privacy</a></li>
+          <li class="list-inline-item"><a href="#">Terms</a></li>
+          <li class="list-inline-item"><a href="#">Support</a></li>
+        </ul>
+      </footer>
+    </div>
+    
+    
+        <script src="/docs/5.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+    
+          <script src="form-validation.js"></script>
+      </body>

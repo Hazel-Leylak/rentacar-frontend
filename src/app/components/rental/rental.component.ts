@@ -10,6 +10,7 @@ import { RentalService } from 'src/app/services/rental.service';
 export class RentalComponent implements OnInit {
 
   rentals:RentalDetail[] = [];
+  delivered:boolean[];
 
   constructor(private rentalService:RentalService) { }
 
@@ -20,7 +21,17 @@ export class RentalComponent implements OnInit {
   getRentals(){
     this.rentalService.getRentals().subscribe((response)=>{
       this.rentals = response.data;
+      
     })
+  }
+
+  isDelivered(carId:number){
+     this.rentalService.checkStatus(carId).subscribe(response=>{
+      console.log(response)
+       return response
+     })
+     return false;
+    
   }
 
 }

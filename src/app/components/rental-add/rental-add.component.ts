@@ -9,6 +9,10 @@ import { CustomerService } from 'src/app/services/customer.service';
 import { DatePipe } from '@angular/common';
 import { Rental } from 'src/app/models/rental';
 import { RentalService } from 'src/app/services/rental.service';
+import { FindeksService } from 'src/app/services/findeks.service';
+import { CarService } from 'src/app/services/car.service';
+import { Car } from 'src/app/models/car';
+import { Findeks } from 'src/app/models/findeks';
 
 @Component({
   selector: 'app-rental-add',
@@ -31,6 +35,8 @@ export class RentalAddComponent implements OnInit {
   totalPrice:number=0;
   totalDay:number=1;
   formCompleted = false;
+  selectedCar:Car;
+  customerFindeks:Findeks;
 
 
   constructor(private customerService: CustomerService,
@@ -39,7 +45,9 @@ export class RentalAddComponent implements OnInit {
     private toastrService: ToastrService,
     private datePipe:DatePipe,
     private activatedRoute:ActivatedRoute,
-    private rentalService:RentalService) { }
+    private rentalService:RentalService,
+    private findeksService:FindeksService,
+    private carService:CarService) { }
 
   ngOnInit(): void {
     this.getCustomers();
@@ -94,6 +102,21 @@ export class RentalAddComponent implements OnInit {
     }
   }
 
+  isFindeksScoreEnough(carId:number, customerId:number){
+    this.carService.getCarById(carId).subscribe(response=>{
+      this.selectedCar = response.data;
+    })
+    this.findeksService.getFindeksByCustomer(customerId).subscribe(response=>{
+      this.customerFindeks = response.data;
+    })
+    if(this.selectedCar.minFindeksScore <= this.customerFindeks.score){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+
  
 
   payment(){
@@ -109,8 +132,11 @@ export class RentalAddComponent implements OnInit {
         endDate: this.endDate,
         returnDate: undefined
       };
+
+      if(this.isFindeksScoreEnough(rental.carId, rental.customerId)){
   
       this.rentalService.getRentalStatus(rental.carId).subscribe(()=>{
+        
         this.rentalService.rentalData = rental;
         sessionStorage.setItem('rental-data',JSON.stringify(this.rentalAddForm.value));
         this.toastrService.warning("Routing the payment page.");
@@ -119,6 +145,10 @@ export class RentalAddComponent implements OnInit {
         this.toastrService.warning("Problem has occured.");
       })
       }
+      else{
+        this.toastrService.error("Findeks Score is not enough");
+      }
+    }
       else {
         this.toastrService.error("Form is incorrect.");
       }   

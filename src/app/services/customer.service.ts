@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Customer } from '../models/customer';
 import { ListResponseModel } from '../models/listResponseModel';
+import { SingleResponseModel } from '../models/singleResponseModel';
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +19,8 @@ export class CustomerService {
     return this.httpClient.get<ListResponseModel<Customer>>(urlPath);
   }
 
-  getCustomerById(customerId:number):Observable<ListResponseModel<Customer>>{
+  getCustomerById(customerId:number){
     let urlPath = this.apiUrl + "getbyid?customerId="+customerId;
-    return this.httpClient.get<ListResponseModel<Customer>>(urlPath);
+    return this.httpClient.get<SingleResponseModel<Customer>>(urlPath);
   }
 }

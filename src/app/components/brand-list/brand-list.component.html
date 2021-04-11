@@ -1,0 +1,24 @@
+<div class="card">
+    <div class="card-header text-center">
+      <div class="card-body">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Brand</th>
+  
+  
+            </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let brand of brands">
+            <th scope="row">{{brand.brandId}}</th>
+            <td>{{brand.brandName}}</td>
+
+          </tr>
+        </tbody>
+        </table>
+      </div>
+      
+    </div>
+  </div>
