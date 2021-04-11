@@ -8,8 +8,7 @@
             <th>User</th>
             <th>Rental Date</th>
             <th>Return Date</th>
-            <th>Status</th>
-            <th>Operations</th>
+            
         </tr>
     </thead>
     <tr *ngFor = "let rental of rentals">
@@ -20,11 +19,7 @@
         <td>{{rental.userName}}</td>
         <td>{{rental.rentalDate}}</td>
         <td>{{rental.returnDate}}</td>
-        <td>-</td>
-        <td>
-            <button class="btn btn-primary" *ngIf="isDelivered(rental.carId)" style="margin-right: 16px" aria-label="Edit">
-              Delivered
-            </button>
-        </td>
+        
+        
     </tr>
 </table>
