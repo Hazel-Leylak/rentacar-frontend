@@ -1,6 +1,6 @@
 # Rentacar
 
-> Go to Back-End Project -> [.NET Front-End](https://github.com/Hazel-Leylak/RentACarProject)
+> Go to Back-End Project -> [.NET Project](https://github.com/Hazel-Leylak/RentACarProject)
 
 ![Ekran Alıntısı13](https://user-images.githubusercontent.com/47564151/114320947-2b713e80-9b21-11eb-94e2-e30ab313639d.PNG)
 ![Ekran Alıntısı14](https://user-images.githubusercontent.com/47564151/114320949-31671f80-9b21-11eb-9ff1-0bb46a3ed028.PNG)
